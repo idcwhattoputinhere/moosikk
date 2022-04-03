@@ -14,13 +14,16 @@ app.get("/api/detailsById", require("./routes/detailsById.js"));
 app.get("/404", (req, res) =>
     res.sendFile(path.join(__dirname, "/html", "/error.html"))
 );
+app.get("/favicon.ico", (req, res) =>
+    res.sendFile(path.join(__dirname, "/html", "/favicon.ico"))
+);
 app.get("/*", (req, res) => {
     console.log("[MAIN]: Someone opened the page");
     res.sendFile(path.join(__dirname, "/html", "/player.html"));
 });
 
-app.listen(3000, () => {
-    console.log("app running on http://localhost:8080");
+app.listen(process.env.PORT || 3000, () => {
+    console.log("app running on http://localhost:3000");
 });
 
 // __   _______ ____  _       ____  _____    _    ____  
