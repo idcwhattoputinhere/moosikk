@@ -1,0 +1,459 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+        />
+    </head>
+    <style>
+        @font-face {
+            font-family: "pop";
+            src: url("Poppins-Bold.ttf");
+        }
+        html {
+            overflow: hidden;
+        }
+        * {
+            margin: 0;
+        }
+        body {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            overflow: scroll;
+            margin: 0;
+            padding: 0;
+            background-color: #861657;
+            background-image: linear-gradient(326deg, #861657 0%, #ffa69e 74%);
+        }
+
+        #controls {
+            position: fixed;
+            display: block;
+            bottom: 0;
+            margin: 0;
+            padding-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 14px;
+            background-color: #18181894;
+            color: lavenderblush;
+            z-index: 1;
+            border-color: #282828;
+            border-width: 0.25px;
+            border-style: solid;
+            border-radius: 10px;
+            z-index: 69;
+            box-shadow: 0 0 8px black;
+        }
+        #controls_toggled {
+            position: fixed;
+            bottom: 0;
+            display: none;
+            margin: 0;
+            padding-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 14px;
+            background-color: #18181894;
+            color: lavenderblush;
+            z-index: 1;
+            border-color: #282828;
+            border-width: 0.25px;
+            border-style: solid;
+            border-radius: 10px;
+            z-index: 69;
+            box-shadow: 0 0 8px black;
+        }
+        .buttons {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            bottom: -10px;
+        }
+        .buttons123 {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            bottom: -10px;
+            padding-bottom: 5px;
+        }
+
+        /* buttons */
+
+        #play {
+            border: none;
+            padding: 8px 8px;
+            background: transparent;
+            border-radius: 50px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition-duration: 0.2s;
+            font-size: 19px;
+            color: ivory;
+        }
+        #play:hover {
+            color: rgb(207, 207, 207);
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        #back {
+            border: none;
+            padding: 8px 8px;
+            background: transparent;
+            border-radius: 50px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition-duration: 0.2s;
+            font-size: 19px;
+            color: ivory;
+        }
+        #back:hover {
+            color: rgb(207, 207, 207);
+        }
+        #next {
+            border: none;
+            padding: 8px 8px;
+            background: transparent;
+            border-radius: 50px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition-duration: 0.2s;
+            font-size: 19px;
+            color: ivory;
+        }
+        #next:hover {
+            color: rgb(207, 207, 207);
+        }
+        .subtitle {
+            color: ivory;
+        }
+
+        /* buttons end */
+
+        /* lycris */
+        .no-display {
+            display: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 2px; /* Remove scrollbar space */
+            background: transparent; /* Optional: just make scrollbar invisible */
+        }
+        /* Optional: show position indicator in red */
+        ::-webkit-scrollbar-thumb {
+            background: ivory;
+        }
+
+        /* lyrics end */
+
+        .details {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 25px;
+            z-index: 69;
+        }
+
+        #slider_buttons {
+            padding-right: 2.5px;
+            padding-left: 2.5px;
+        }
+
+        #bold {
+            font-weight: 900;
+        }
+        #duration {
+            width: 75%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .slider_container {
+            line-height: 5px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .seek_slider {
+            width: 75%;
+            padding: x 8px; /* ik this wrong but this is only the thing it fixes it so shut and go wash utensils */
+            cursor: pointer;
+        }
+        .list_songs li {
+            cursor: pointer;
+            padding: 10px;
+            position: relative;
+            top: -4vh;
+            background-color: #6272a4;
+            border: #50fa7b 2px solid;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            color: #f8f8f2;
+        }
+        #song_title {
+            padding-right: 10px;
+        }
+        #song_time {
+            padding-left: 10px;
+        }
+        #song_artist {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    </style>
+    <body>
+        <noscript
+            >Enable that fucking JavaScript you little sussy baka. Like that
+            little extra "privacy" or "security" from disabling this feature
+            really helps smh.</noscript
+        >
+
+        <div style="padding: 10px; overflow-y: scroll" class="body_content">
+            <input
+                class="input is-rounded"
+                type="text"
+                placeholder="Rounded input"
+                id="search_input"
+            />
+            <div class="section">
+                <ul class="list_songs" id="list_songs">
+                    <!-- <li>
+                        <span id="song_title">Moneko</span
+                        ><span id="song_artist">Geoxor</span
+                        ><span id="song_time">3:00</span>
+                    </li>
+                    <li>a</li> -->
+                </ul>
+            </div>
+        </div>
+
+        <div id="controls">
+            <div class="details">
+                <div class="container">
+                    <div class="track-name">
+                        <div class="subtitle is-6">
+                            <div id="track_playing">Never gonna gib u up</div>
+                            <span style="padding-left: 2px; padding-right: 2px"
+                                >.</span
+                            >
+                            <div id="track_artist">Rik astley</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                <div class="next-track" id="play" onclick="shuffle()">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div
+                    class="playpause-track"
+                    id="play"
+                    onclick="playpauseTrack()"
+                >
+                    <i class="fa fa-play" id="play-pause-btn"></i>
+                </div>
+                <div class="next-track" id="play" onclick="manageLyricsClick()">
+                    <i class="fa fa-music"></i>
+                </div>
+                <i onclick="toggle()" id="play" class="fas fa-angle-down"></i>
+            </div>
+            <center>
+                <div class="slider_container">
+                    <div class="slider_buttons" id="current-time">00:00</div>
+                    <input
+                        type="range"
+                        min="1"
+                        max="100"
+                        value="0"
+                        class="seek_slider"
+                        id="seek_slider"
+                        onchange="seekTo()"
+                    />
+                    <div class="slider_buttons" id="total-duration">00:00</div>
+                </div>
+                <div id="volume_slider" class="slider_container">
+                    <i id="slider_buttons" class="fa fa-volume-mute"></i>
+                    <div id="vol">
+                        <input
+                            style="cursor: pointer"
+                            type="range"
+                            min="0"
+                            max="100"
+                            value="25"
+                            class="volume_slider"
+                            onchange="setVolume()"
+                        />
+                    </div>
+                    <i id="slider_buttons" class="fa fa-volume-up"></i>
+                </div>
+            </center>
+        </div>
+        <div id="controls_toggled">
+            <div class="buttons123">
+                <div
+                    class="playpause-track"
+                    id="play"
+                    onclick="playpauseTrack()"
+                >
+                    <i class="fa fa-play" id="play-pause-btn"></i>
+                </div>
+                <i onclick="toggle1()" id="play" class="fas fa-angle-up"></i>
+            </div>
+        </div>
+        <div id="modal" class="modal">
+            <div class="modal-background"></div>
+            <div class="modal-content" style="padding: 10px">
+                <div class="box">
+                    <p id="lyrics-para" style="overflow-y: scroll">Loading..</p>
+                </div>
+            </div>
+            <button
+                class="modal-close is-large"
+                onclick="closelyrics()"
+                aria-label="close"
+            ></button>
+        </div>
+        <script src="js/script.js"></script>
+        <script>
+            function toggle() {
+                document.getElementById("controls").style.display = "none";
+                document.getElementById("controls_toggled").style.display =
+                    "block";
+            }
+            function toggle1() {
+                document.getElementById("controls_toggled").style.display =
+                    "none";
+                document.getElementById("controls").style.display = "block";
+            }
+        </script>
+    </body>
+    <script>
+        // script for searching on change of the rounded search bar
+        let searchInput = document.getElementById("search_input");
+        searchInput.onchange = (e) => {
+            fetch(`/api/search?query=${searchInput.value}`)
+                .then((res) => res.json())
+                .then((res) => {
+                    let collectionOfDivs = "";
+                    res.forEach((data) => {
+                        collectionOfDivs += `<li onclick="playSong('${data.videoId}')"><span id="song_title">${data.title}</span><span id="song_artist">${data.author.name}</span><span id="song_time">${data.timestamp}</span></li>`;
+                    });
+                    document.getElementById("list_songs").innerHTML =
+                        collectionOfDivs;
+                });
+        };
+    </script>
+    <script>
+        let currentlyPlaying = false;
+        const audio = new Audio();
+        let playpausebtn = document.getElementById("play-pause-btn");
+        let seekSlider = document.getElementById("seek_slider");
+        let currentTime = document.getElementById("current-time");
+        let updateTimer;
+        audio.onplay = () => {
+            console.log("playing");
+            playpausebtn.classList.remove("fa-play");
+            playpausebtn.classList.add("fa-pause");
+            updateTimer = setInterval(seekUpdate, 1000);
+        };
+        audio.onpause = () => {
+            console.log("paused");
+            playpausebtn.classList.remove("fa-pause");
+            playpausebtn.classList.add("fa-play");
+            clearInterval(updateTimer);
+        };
+        // main songs player
+        const playSong = (songId) => {
+            let src = `/api/audio/${songId}.mp3`;
+            audio.src = src;
+            fetch(`/api/detailsById?query=${songId}`)
+                .then((data) => data.json())
+                .then((data) => {
+                    document.getElementById("track_playing").innerText =
+                        data.title;
+                    document.getElementById("track_artist").innerText =
+                        data.author.name;
+                    document.getElementById("total-duration").innerText =
+                        data.timestamp;
+                });
+            currentlyPlaying = true;
+            audio.load();
+            audio.play();
+        };
+
+        const playpauseTrack = () => {
+            if (currentlyPlaying) {
+                audio.pause();
+                currentlyPlaying = false;
+            } else {
+                audio.play();
+                currentlyPlaying = true;
+            }
+        };
+
+        const seekTo = () => {
+            let toSeek = audio.duration * (seekSlider.value / 100);
+            audio.currentTime = toSeek;
+        };
+
+        const seekUpdate = () => {
+            let seekPosition = 0;
+            // Check if the current track duration is a legible number
+            if (!isNaN(audio.duration)) {
+                seekPosition = audio.currentTime * (100 / audio.duration);
+                seekSlider.value = seekPosition;
+                // Calculate the time left and the total duration
+                let currentMinutes = Math.floor(audio.currentTime / 60);
+                let currentSeconds = Math.floor(
+                    audio.currentTime - currentMinutes * 60
+                );
+                let durationMinutes = Math.floor(audio.duration / 60);
+                let durationSeconds = Math.floor(
+                    audio.duration - durationMinutes * 60
+                );
+
+                // Adding a zero to the single digit time values
+                if (currentSeconds < 10) {
+                    currentSeconds = "0" + currentSeconds;
+                }
+                if (durationSeconds < 10) {
+                    durationSeconds = "0" + durationSeconds;
+                }
+                if (currentMinutes < 10) {
+                    currentMinutes = "0" + currentMinutes;
+                }
+                if (durationMinutes < 10) {
+                    durationMinutes = "0" + durationMinutes;
+                }
+
+                currentTime.textContent = currentMinutes + ":" + currentSeconds;
+                // total_duration.textContent =
+                // durationMinutes + ":" + durationSeconds;
+            }
+        };
+    </script>
+</html>
