@@ -41,6 +41,10 @@ module.exports = async (req, res) => {
 
     try {
         res.set("content-type", "audio/mp3");
+        res.set(
+            "content-disposition",
+            `attachment; filename="${vidInfo.videoDetails.title}.mp3"`
+        );
 
         ytdlBase
             .on("data", (data) => {
