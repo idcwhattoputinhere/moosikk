@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "while true;do node index.js;done"
+        "start": "npm i && while true;do node index.js;done"
     },
     "keywords": [],
     "author": "",
