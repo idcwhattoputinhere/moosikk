@@ -351,7 +351,7 @@
             }
         </script>
     </body>
-    <script>
+    <!-- <script>
         // script for searching on change of the rounded search bar
         let searchInput = document.getElementById("search_input");
         searchInput.onchange = (e) => {
@@ -366,7 +366,7 @@
                         collectionOfDivs;
                 });
         };
-    </script>
+    </script> -->
     <script>
         let currentlyPlaying = false;
         const audio = new Audio();
@@ -375,6 +375,7 @@
         let currentTime = document.getElementById("current-time");
         let updateTimer;
         audio.onplay = () => {
+            document.title = audio.name;
             console.log("playing");
             playpausebtn.classList.remove("fa-play");
             playpausebtn.classList.add("fa-pause");
@@ -386,20 +387,32 @@
             playpausebtn.classList.add("fa-play");
             clearInterval(updateTimer);
         };
+        // on audio stop set page to initial state
+        audio.onended = () => {
+            console.log("ended");
+            playpausebtn.classList.remove("fa-pause");
+            playpausebtn.classList.add("fa-play");
+            document.title = "Not Playing";
+            clearInterval(updateTimer);
+            seekSlider.value = 0;
+            currentTime.innerHTML = "00:00";
+        };
         // main songs player
         const playSong = (songId) => {
             let src = `/api/audio/${songId}.mp3`;
-            audio.src = src;
             fetch(`/api/detailsById?query=${songId}`)
                 .then((data) => data.json())
                 .then((data) => {
+                    audio.name = data.title;
                     document.getElementById("track_playing").innerText =
                         data.title;
                     document.getElementById("track_artist").innerText =
                         data.author.name;
                     document.getElementById("total-duration").innerText =
                         data.timestamp;
+                    document.title = audio.name;
                 });
+            audio.src = src;
             currentlyPlaying = true;
             audio.load();
             audio.play();
@@ -455,5 +468,27 @@
                 // durationMinutes + ":" + durationSeconds;
             }
         };
+    </script>
+    <script>
+        let searchInput = document.getElementById("search_input");
+        let writeTime = null;
+        searchInput.addEventListener("keyup", function (e) {
+            if (!e.key.match(/[a-zA-Z0-9]/)) {
+                return;
+            }
+            clearTimeout(writeTime);
+            writeTime = setTimeout(function () {
+                fetch(`/api/search?query=${searchInput.value}`)
+                    .then((res) => res.json())
+                    .then((res) => {
+                        let collectionOfDivs = "";
+                        res.forEach((data) => {
+                            collectionOfDivs += `<li onclick="playSong('${data.videoId}')"><span id="song_title">${data.title}</span><span id="song_artist">${data.author.name}</span><span id="song_time">${data.timestamp}</span></li>`;
+                        });
+                        document.getElementById("list_songs").innerHTML =
+                            collectionOfDivs;
+                    });
+            }, 300);
+        });
     </script>
 </html>
