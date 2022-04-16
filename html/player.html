@@ -428,8 +428,10 @@
                 .then((buffer) => {
                     let base64 = bufferToBase64(buffer);
                     let base64src = `data:audio/mp3;base64,${base64}`;
+                    let t = audio.currentTime
                     audio.src = base64src;
                     audio.load();
+                    audio.currentTime = t
                     audio.play();
                 });
         };
