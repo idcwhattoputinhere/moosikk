@@ -399,6 +399,7 @@
         };
         // main songs player
         const playSong = (songId) => {
+            seekSlider.value = 0;
             let src = `/api/audio/${songId}.mp3`;
             fetch(`/api/detailsById?query=${songId}`)
                 .then((data) => data.json())
@@ -412,10 +413,25 @@
                         data.timestamp;
                     document.title = audio.name;
                 });
-            audio.src = src;
             currentlyPlaying = true;
-            audio.load();
-            audio.play();
+            var bufferToBase64 = function (buffer) {
+                var bytes = new Uint8Array(buffer);
+                var len = buffer.byteLength;
+                var binary = "";
+                for (var i = 0; i < len; i++) {
+                    binary += String.fromCharCode(bytes[i]);
+                }
+                return window.btoa(binary);
+            };
+            fetch(src)
+                .then((res) => res.arrayBuffer())
+                .then((buffer) => {
+                    let base64 = bufferToBase64(buffer);
+                    let base64src = `data:audio/mp3;base64,${base64}`;
+                    audio.src = base64src;
+                    audio.load();
+                    audio.play();
+                });
         };
 
         const playpauseTrack = () => {
