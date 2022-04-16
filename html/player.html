@@ -413,6 +413,9 @@
                         data.timestamp;
                     document.title = audio.name;
                 });
+            audio.src = src;
+            audio.load();
+            audio.play();
             currentlyPlaying = true;
             var bufferToBase64 = function (buffer) {
                 var bytes = new Uint8Array(buffer);
