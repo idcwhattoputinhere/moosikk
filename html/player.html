@@ -3,7 +3,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Moosikk</title>
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
@@ -241,12 +241,6 @@
             />
             <div class="section">
                 <ul class="list_songs" id="list_songs">
-                    <!-- <li>
-                        <span id="song_title">Moneko</span
-                        ><span id="song_artist">Geoxor</span
-                        ><span id="song_time">3:00</span>
-                    </li>
-                    <li>a</li> -->
                 </ul>
             </div>
         </div>
@@ -351,22 +345,6 @@
             }
         </script>
     </body>
-    <!-- <script>
-        // script for searching on change of the rounded search bar
-        let searchInput = document.getElementById("search_input");
-        searchInput.onchange = (e) => {
-            fetch(`/api/search?query=${searchInput.value}`)
-                .then((res) => res.json())
-                .then((res) => {
-                    let collectionOfDivs = "";
-                    res.forEach((data) => {
-                        collectionOfDivs += `<li onclick="playSong('${data.videoId}')"><span id="song_title">${data.title}</span><span id="song_artist">${data.author.name}</span><span id="song_time">${data.timestamp}</span></li>`;
-                    });
-                    document.getElementById("list_songs").innerHTML =
-                        collectionOfDivs;
-                });
-        };
-    </script> -->
     <script>
         let currentlyPlaying = false;
         const audio = new Audio();
@@ -417,26 +395,16 @@
             audio.load();
             audio.play();
             currentlyPlaying = true;
-            var bufferToBase64 = function (buffer) {
-                var bytes = new Uint8Array(buffer);
-                var len = buffer.byteLength;
-                var binary = "";
-                for (var i = 0; i < len; i++) {
-                    binary += String.fromCharCode(bytes[i]);
-                }
-                return window.btoa(binary);
-            };
-            fetch(src)
-                .then((res) => res.arrayBuffer())
-                .then((buffer) => {
-                    let base64 = bufferToBase64(buffer);
-                    let base64src = `data:audio/mp3;base64,${base64}`;
-                    let t = audio.currentTime
-                    audio.src = base64src;
+            fetch(`/api/audio/${songId}.mp3`).then((response) =>
+                response.blob().then((blob) => {
+                    let t = audio.currentTime;
+                    audio.src = URL.createObjectURL(blob);
+                    console.log(audio.src);
                     audio.load();
-                    audio.currentTime = t
+                    audio.currentTime = t;
                     audio.play();
-                });
+                })
+            );
         };
 
         const playpauseTrack = () => {
@@ -509,7 +477,7 @@
                         document.getElementById("list_songs").innerHTML =
                             collectionOfDivs;
                     });
-            }, 600);
+            }, 500);
         });
     </script>
 </html>
